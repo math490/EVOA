@@ -128,7 +128,7 @@ def trash_register():
 
         flash("Tarefa adicionada com sucesso!", "success")
         return redirect(url_for("trash_logs"))
-    return render_template("add_tasks.html")
+    return render_template("trash_register.html")
 
 #-----------------------------------
 # Atualizar Status da Tarefa --- UPDATE
@@ -144,7 +144,7 @@ def update_log(id):
     
     trash_log.status = "Concluída" if trash_log.status == "Pendente" else "Pendente"
     db.session.commit()
-    return redirect(url_for("tasks"))
+    return redirect(url_for("trash_logs"))
 
 #-----------------------------------
 # Deletar Tarefa --- DELETE
@@ -156,12 +156,12 @@ def delete_log(id):
 
     if trash_log.user_id != current_user.id:
         flash("Acesso não autorizado - Esta não é a conta logada!", "danger")
-        return redirect(url_for("tasks"))
+        return redirect(url_for("trash_logs"))
     
     db.session.delete(trash_log)
     db.session.commit()
     flash("Tarefa excluída com sucesso!", "info")
-    return redirect(url_for("tasks"))
+    return redirect(url_for("trash_logs"))
 
 #-----------------------------------
 # CRIAR BANCO NA PRIMEIRA EXECUÇÃO
