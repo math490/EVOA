@@ -133,6 +133,7 @@ def trash_register():
 #-----------------------------------
 # Atualizar Status da Tarefa --- UPDATE
 #-----------------------------------
+
 @app.route("/update_log/<int:id>")
 @login_required
 def update_log(id):
@@ -149,6 +150,7 @@ def update_log(id):
 #-----------------------------------
 # Deletar Tarefa --- DELETE
 #-----------------------------------
+
 @app.route("/delete_log/<int:id>")
 @login_required
 def delete_log(id):
