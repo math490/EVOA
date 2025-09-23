@@ -126,13 +126,13 @@ def trash_register():
         db.session.add(new_register)
         db.session.commit()
 
-        flash("Tarefa adicionada com sucesso!", "success")
+        flash("Log adicionado com sucesso!", "success")
         return redirect(url_for("trash_logs"))
     return render_template("trash_register.html")
 
-#-----------------------------------
+#-----------------------------------------
 # Atualizar Status da Tarefa --- UPDATE
-#-----------------------------------
+#-----------------------------------------
 
 @app.route("/update_log/<int:id>")
 @login_required
@@ -162,7 +162,7 @@ def delete_log(id):
     
     db.session.delete(trash_log)
     db.session.commit()
-    flash("Tarefa excluída com sucesso!", "info")
+    flash("Log excluído com sucesso!", "info")
     return redirect(url_for("trash_logs"))
 
 #-----------------------------------
