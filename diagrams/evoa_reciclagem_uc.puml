@@ -1,0 +1,21 @@
+@startuml casos_de_uso
+
+actor usuario as "Usuário"
+actor sistemaReciclagem as "        <<service>>\nSistemaReciclagem"
+actor sistemaPrefeitura as "       <<service>>\nSistemaPrefeitura"
+
+(Buscar Descontos) as (UC1)
+(Selecionar Descontos) as (UC2)
+(Adquirir Desconto) as (UC3)
+(Gastar Cash) as (UC4)
+(Dar Feedback) as (UC5)
+(Localizar Pontos) as (UC6)
+
+usuario --> (UC1)
+usuario --> (UC5)
+usuario --> (UC6)
+(UC1) --> (UC2)
+(UC2) --> (UC3)
+(UC3) --> (UC4)
+
+@enduml
