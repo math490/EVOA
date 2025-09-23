@@ -98,7 +98,7 @@ def login():
 @app.route("/logout")
 @login_required
 def logout():
-    logout_user
+    logout_user()
     return redirect(url_for("index"))
 
 #-----------------------------------
@@ -108,8 +108,8 @@ def logout():
 @app.route("/trash_logs", methods=["POST", "GET"])
 @login_required
 def trash_logs():
-    trah_logs = TrashLog.query.filter_by(user_id=current_user.id).all()
-    return render_template("trash_logs.html", trah_logs=trah_logs)
+    trash_logs = TrashLog.query.filter_by(user_id=current_user.id).all()
+    return render_template("trash_logs.html", trash_logs=trash_logs)
 
 #-----------------------------------
 # Adicionar Tarefas --- CREATE

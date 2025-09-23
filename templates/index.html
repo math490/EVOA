@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %} Início - EVOA {% endblock %}
+{% block content %}
+    <section class="welcome">
+        <h1>Bem-vindo ao <span style="color: green;">EVOA</span> 🌱</h1>
+        <p>
+            Este é o sistema de gerenciamento de reciclagem e tarefas ambientais.<br>
+            Faça login ou registre-se para começar a registrar suas atividades.
+        </p>
+    </section>
+
+    {% if current_user.is_authenticated %}
+        <section class="actions">
+            <h2>Minhas Ações</h2>
+            <p>Olá, <strong>{{ current_user.name }}</strong>!</p>
+            <a href="{{ url_for('trash_register') }}" class="btn">Registrar Material</a>
+            <a href="{{ url_for('trash_logs') }}" class="btn">Ver Meus Registros</a>
+        </section>
+    {% else %}
+        <section class="cta">
+            <h2>Comece Agora</h2>
+            <a href="{{ url_for('login') }}" class="btn">Login</a>
+            <a href="{{ url_for('register') }}" class="btn">Registrar</a>
+        </section>
+    {% endif %}
+{% endblock %}
