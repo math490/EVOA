@@ -1,0 +1,17 @@
+@startuml casos_de_uso
+
+actor usuario as "Usuário"
+actor sistemaReciclagem as "        <<service>>\nSistema"
+
+(Buscar Descontos) as (UC1)
+(Selecionar Descontos) as (UC2)
+(Adquirir Desconto) as (UC3)
+(Diminuir Cash) as (UC4)
+
+usuario --> (UC1)
+(UC1) <.down- (UC2) : extends
+(UC2) <.down- (UC3) : extends
+(UC3) -down.> (UC4) : include
+sistemaReciclagem --> (UC4)
+
+@enduml

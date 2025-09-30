@@ -2,16 +2,19 @@
 
 !theme amiga
 
-entity A {
+entity Usuario {
     + id : number
     + nome : string
 }
 
-entity B {
+entity Sistema {
     + id : number
     + nome : string
 }
 
-A --{B
+entity Desconto {
+    + id : number
+    + nome : string
+}
 
 @enduml
