@@ -45,5 +45,5 @@ Alguns módulos já implementados:
 ## 🔧 Instalação e Execução
 1. Clone este repositório:  
    ```bash
-   https://github.com/math490/EVOA.git
+   git clone https://github.com/math490/EVOA.git
    cd evoa
