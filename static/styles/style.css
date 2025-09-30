@@ -6,12 +6,15 @@ body {
 }
 
 nav {
-    background: #2e7d32;
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+}
+
+header {
+    background: #2e7d32;
 }
 
 nav a {
@@ -55,6 +58,10 @@ h1, h2 {
         padding: 10px 5px;
         background: url("../images/app_bar_icon.png") no-repeat center center;
         background-size: cover;
+    }
+
+    header {
+        background: #94b331;
     }
 
     nav a {

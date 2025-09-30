@@ -7,16 +7,18 @@
     <link rel="stylesheet" href="static/styles/style.css">
 </head>
 <body>
-    <nav>
-        <a href="{{ url_for("index") }}">Início</a>
-        {% if current_user.is_authenticated %}
-            <a href="{{ url_for("trash_logs") }}">Minhas Tarefas</a>
-            <a href="{{ url_for("logout") }}">Sair</a>
-        {% else %}
-            <a href="{{ url_for("login") }}">Login</a>
-            <a href="{{ url_for("register") }}">Registrar</a>
-        {% endif %}
-    </nav>
+    <header>
+        <nav>
+            <a href="{{ url_for("index") }}">Início</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for("trash_logs") }}">Minhas Tarefas</a>
+                <a href="{{ url_for("logout") }}">Sair</a>
+            {% else %}
+                <a href="{{ url_for("login") }}">Login</a>
+                <a href="{{ url_for("register") }}">Registrar</a>
+            {% endif %}
+        </nav>
+    </header>
     <main>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}

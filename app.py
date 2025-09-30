@@ -28,6 +28,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True, nullable=True)
     password = db.Column(db.String(20), nullable=False)
+    cash = db.Column(db.Float, default=0.0)
     trash_logs = db.relationship("TrashLog", backref="user", lazy=True)
 
 class TrashLog(db.Model):

@@ -1,0 +1,17 @@
+@startuml classes
+
+!theme amiga
+
+entity A {
+    + id : number
+    + nome : string
+}
+
+entity B {
+    + id : number
+    + nome : string
+}
+
+A --{B
+
+@enduml

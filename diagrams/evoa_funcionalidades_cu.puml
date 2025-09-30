@@ -1,0 +1,18 @@
+@startuml casos_uso
+
+left to right direction
+
+actor "Usuário EVOA" as usuario
+
+package "Módulo Ação" as acao {
+  usecase "A1: Acumular Cash/XP" as UC11
+  usecase "A2: Resgatar Recompensas\nna Loja" as UC12
+  usecase "A3: Participar de Desafios\nEspeciais" as UC13
+  usecase "A4: Compartilhar\nConquistas" as UC14
+}
+
+usuario --> UC11
+usuario --> UC13: Consegue
+usuario --> UC14: Pode
+
+UC11 .> UC12: inclui

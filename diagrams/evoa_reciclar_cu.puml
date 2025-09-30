@@ -1,0 +1,14 @@
+@startuml casos_uso
+
+left to right direction
+
+actor "Usuário EVOA" as usuario
+
+package "Módulo Ecologia" as ecologia {
+  usecase "E1: Registrar Material\nReciclado" as UC1
+  usecase "E2: Acompanhar Histórico\nDiário" as UC2
+}
+
+usuario --> UC1: Realiza
+
+UC1 .> UC2: inclui
