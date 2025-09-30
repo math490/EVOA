@@ -1,14 +1,16 @@
 {% extends "base.html" %}
-{% block title %} Tarefas {% endblock %}
+{% block title %} Suas Reciclagens {% endblock %}
 {% block content %}
-    <h2>Minhas Tarefas</h2>
-    <a href="{{ url_for("trash_register") }}">Adicionar Nova Tarefa</a><br>
+    <h2>Minhas Reciclagens</h2>
+    <a href="{{ url_for("trash_register") }}">Adicionar Nova Reciclagem</a><br>
     <ul>
         {% for trash_log in trash_logs %}
             <li>
-                <b>{{ trash_log.material }}</b> - {{ trash_log.status }}
-                [ <a href="{{ url_for("update_log", id=trash_log.id) }}">Alterar Status</a> ]
-                [ <a href="{{ url_for("delete_log", id=trash_log.id) }}">Excluir</a> ]
+                <b>{{ trash_log.material_ref.name }}</b> -
+                {{ trash_log.weight }} kg -
+                {{ trash_log.date.strftime('%d/%m/%Y') }} -
+                Cash: R$ {{ '%.2f' % trash_log.cash_earned }} -
+                XP: {{ trash_log.xp_earned }}
             </li>
         {% endfor %}
     </ul>

@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from datetime import date
 
 #-----------------------------------
 # CONFIGURAÇÃO INICIAL
@@ -28,14 +29,38 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True, nullable=True)
     password = db.Column(db.String(20), nullable=False)
-    cash = db.Column(db.Float, default=0.0)
+    cash = db.Column(db.Float, default=0.0)         # Pontos
+    xp = db.Column(db.Integer, default=0)           # Experiência
+    level = db.Column(db.Integer, default=1)        # Nível
     trash_logs = db.relationship("TrashLog", backref="user", lazy=True)
+
+    def add_xp(self, amount):
+        self.xp += amount
+        self.update_level()
+
+    def add_cash(self, amount):
+        self.cash += amount
+
+    def update_level(self):
+        # Exemplo simples: 100 XP por nível
+        self.level = (self.xp // 100) + 1
+
+class Material(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+    default_weight = db.Column(db.Float, nullable=False)     # Peso padrão (ex: 1kg)
+
+    trash_logs = db.relationship("TrashLog", backref="material_ref", lazy=True)
 
 class TrashLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    material = db.Column(db.String(150))
+    material_id = db.Column(db.Integer, db.ForeignKey("material.id"), nullable=False)
     status = db.Column(db.String(20), default="Pendente")
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    weight = db.Column(db.Float, default=1.0)
+    date = db.Column(db.Date, default=date.today)
+    cash_earned = db.Column(db.Float, default=0.0)
+    xp_earned = db.Column(db.Integer, default=0)
 
 #-----------------------------------
 # LOGIN MANAGER
@@ -52,6 +77,33 @@ def load_user(user_id):
 @app.route("/")
 def index():
     return render_template("index.html")
+
+#-----------------------------------
+# Cadastro de Material --- CREATE
+#-----------------------------------
+
+@app.route("/material_register", methods=["GET", "POST"])
+@login_required
+def material_register():
+    if request.method == "POST":
+        name = request.form.get("name")
+        default_weight = float(request.form.get("default_weight"))
+
+        # Verifica se já existe material com esse nome
+        if Material.query.filter_by(name=name).first():
+            flash("Material já cadastrado!", "warning")
+            return redirect(url_for("material_register"))
+
+        new_material = Material(
+            name=name,
+            default_weight=default_weight
+        )
+        db.session.add(new_material)
+        db.session.commit()
+        flash("Material cadastrado com sucesso!", "success")
+        return redirect(url_for("material_register"))
+
+    return render_template("material_register.html")
 
 #-----------------------------------
 # Cadastro de Usuário --- CREATE
@@ -103,36 +155,80 @@ def logout():
     return redirect(url_for("index"))
 
 #-----------------------------------
-# Listar Tarefas --- READ
-#-----------------------------------
-
-@app.route("/trash_logs", methods=["POST", "GET"])
-@login_required
-def trash_logs():
-    trash_logs = TrashLog.query.filter_by(user_id=current_user.id).all()
-    return render_template("trash_logs.html", trash_logs=trash_logs)
-
-#-----------------------------------
-# Adicionar Tarefas --- CREATE
+# Adicionar Reciclagem --- CREATE
 #-----------------------------------
 
 @app.route("/trash_register", methods=["GET", "POST"])
 @login_required
 def trash_register():
     if request.method == "POST":
-        material = request.form.get("material")
-        
-        new_register = TrashLog(material=material, user_id=current_user.id)
+        material_name = request.form.get("material")
+        weight = float(request.form.get("weight"))
 
+        material = Material.query.filter_by(name=material_name).first()
+        if not material:
+            flash("Material não encontrado!", "danger")
+            return redirect(url_for("trash_register"))
+
+        cash_per_kg = 10 / material.default_weight
+        cash = cash_per_kg * weight
+
+        today = date.today()
+        logs_today = TrashLog.query.filter_by(user_id=current_user.id, date=today).count()
+        xp = 30 + (logs_today * 20)
+
+        new_register = TrashLog(
+            material_id=material.id,
+            user_id=current_user.id,
+            weight=weight,
+            date=today,
+            cash_earned=cash,
+            xp_earned=xp
+        )
         db.session.add(new_register)
+        current_user.add_xp(int(xp))
+        current_user.add_cash(cash)
         db.session.commit()
 
-        flash("Log adicionado com sucesso!", "success")
+        flash(f"Log adicionado! Você ganhou {int(xp)} XP e {cash:.2f} cash!", "success")
         return redirect(url_for("trash_logs"))
-    return render_template("trash_register.html")
+
+    materials = Material.query.all()
+    default_weight = materials[0].default_weight if materials else 0.001
+    return render_template("trash_register.html", materials=materials, default_weight=default_weight)
+
+#-----------------------------------
+# Listar Reciclagem --- READ
+#-----------------------------------
+
+@app.route("/trash_logs")
+@login_required
+def trash_logs():
+    logs = TrashLog.query.filter_by(user_id=current_user.id).order_by(TrashLog.date.desc()).all()
+    return render_template("trash_logs.html", trash_logs=logs)
+
+#-----------------------------------
+# Listar Materiais --- READ
+#-----------------------------------
+
+@app.route("/materials")
+@login_required
+def materials():
+    materials = Material.query.all()
+    return render_template("materials.html", materials=materials)
+
+#-----------------------------------
+# Listar Usuários --- READ
+#-----------------------------------
+
+@app.route("/users")
+@login_required
+def users():
+    users = User.query.all()
+    return render_template("users.html", users=users)
 
 #-----------------------------------------
-# Atualizar Status da Tarefa --- UPDATE
+# Atualizar Status da Reciclagem --- UPDATE
 #-----------------------------------------
 
 @app.route("/update_log/<int:id>")
@@ -149,7 +245,45 @@ def update_log(id):
     return redirect(url_for("trash_logs"))
 
 #-----------------------------------
-# Deletar Tarefa --- DELETE
+# Atualizar Material --- UPDATE
+#-----------------------------------
+
+@app.route("/edit_material/<int:id>", methods=["GET", "POST"])
+@login_required
+def edit_material(id):
+    material = Material.query.get_or_404(id)
+    if request.method == "POST":
+        material.name = request.form.get("name")
+        material.xp_per_unit = int(request.form.get("xp_per_unit"))
+        material.cash_per_unit = float(request.form.get("cash_per_unit"))
+        material.default_weight = float(request.form.get("default_weight"))
+        db.session.commit()
+        flash("Material atualizado com sucesso!", "success")
+        return redirect(url_for("materials"))
+    return render_template("edit_material.html", material=material)
+
+#-----------------------------------
+# Atualizar Usuário --- UPDATE
+#-----------------------------------
+
+@app.route("/edit_user/<int:id>", methods=["GET", "POST"])
+@login_required
+def edit_user(id):
+    user = User.query.get_or_404(id)
+    if request.method == "POST":
+        user.name = request.form.get("name")
+        user.email = request.form.get("email")
+        # Atualização de senha apenas se fornecida
+        password = request.form.get("password")
+        if password:
+            user.password = generate_password_hash(password)
+        db.session.commit()
+        flash("Usuário atualizado com sucesso!", "success")
+        return redirect(url_for("users"))
+    return render_template("edit_user.html", user=user)
+
+#-----------------------------------
+# Deletar Reciclagem --- DELETE
 #-----------------------------------
 
 @app.route("/delete_log/<int:id>")
@@ -165,6 +299,32 @@ def delete_log(id):
     db.session.commit()
     flash("Log excluído com sucesso!", "info")
     return redirect(url_for("trash_logs"))
+
+#-----------------------------------
+# Deletar Material --- DELETE
+#-----------------------------------
+
+@app.route("/delete_material/<int:id>")
+@login_required
+def delete_material(id):
+    material = Material.query.get_or_404(id)
+    db.session.delete(material)
+    db.session.commit()
+    flash("Material excluído com sucesso!", "info")
+    return redirect(url_for("materials"))
+
+#-----------------------------------
+# Deletar Usuário --- DELETE
+#-----------------------------------
+
+@app.route("/delete_user/<int:id>")
+@login_required
+def delete_user(id):
+    user = User.query.get_or_404(id)
+    db.session.delete(user)
+    db.session.commit()
+    flash("Usuário excluído com sucesso!", "info")
+    return redirect(url_for("users"))
 
 #-----------------------------------
 # CRIAR BANCO NA PRIMEIRA EXECUÇÃO

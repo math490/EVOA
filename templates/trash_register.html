@@ -1,11 +1,21 @@
 {% extends "base.html" %}
-{% block title %} Nova Recilcagem {% endblock %}
+{% block title %} Nova Reciclagem {% endblock %}
 {% block content %}
     <h2>Registrar Reciclagem</h2>
     <form method="POST">
 
         <label for="material">Tipo de Material Reciclado</label>
-        <input type="material" name="material" id="material" placeholder="ex: Plástico" required><br>
+        <input list="materials" name="material" id="material" placeholder="Selecione o material" required>
+        <datalist id="materials">
+            {% for material in materials %}
+                <option value="{{ material.name }}">
+            {% endfor %}
+        </datalist>
+        <br>
+
+        <label for="weight">Peso (kg)</label>
+        <input type="number" name="weight" id="weight" step="0.001" min="{{ default_weight }}" placeholder="Peso em kg" required>
+        <br>
 
         <button type="submit">Adicionar Reciclagem</button>
         

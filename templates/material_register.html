@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} Novo Material {% endblock %}
+{% block content %}
+    <h2>Registrar Material Reciclável</h2>
+    <form method="POST">
+
+        <label for="name">Nome do Material</label>
+        <input type="text" name="name" id="name" placeholder="Ex: Papel, Plástico" required>
+        <br>
+
+        <label for="default_weight">Peso Padrão (kg)</label>
+        <input type="number" name="default_weight" id="default_weight" step="0.001" min="0.001" required>
+        <br>
+
+        <button type="submit">Cadastrar Material</button>
+    </form>
+{% endblock %}
