@@ -1,0 +1,62 @@
+@startuml casos_uso
+
+left to right direction
+
+actor "Usuário EVOA" as usuario
+actor "Sistema Prefeitura" as prefeitura <<external>>
+
+package "Módulo Ecologia" as ecologia {
+  usecase "E1: Registrar Material\nReciclado" as UC1
+  usecase "E2: Acompanhar Histórico\nDiário" as UC2
+}
+
+package "Módulo Vigilância" as vigilancia {
+  usecase "V1: Fazer Denúncia de\nIrregularidade" as UC4
+  usecase "V2: Acompanhar Status das\nDenúncias" as UC5
+  usecase "V3: Registrar Evidência\nFotográfica" as UC6
+  usecase "V4: Notificar Órgãos\nCompetentes" as UC7
+}
+
+package "Módulo Organização" as organizacao {
+  usecase "O1: Visualizar Progressão\nde Nível" as UC8
+  usecase "O2: Consultar Ranking\nComunitário" as UC9
+  usecase "O3: Gerenciar Perfil do\nUsuário" as UC10
+}
+
+package "Módulo Ação" as acao {
+  usecase "A1: Acumular Cash/XP" as UC11
+  usecase "A2: Resgatar Recompensas\nna Loja" as UC12
+  usecase "A3: Participar de Desafios\nEspeciais" as UC13
+  usecase "A4: Compartilhar\nConquistas" as UC14
+}
+
+usuario --> UC1
+usuario --> UC4
+usuario --> UC5
+usuario --> UC8
+usuario --> UC9
+usuario --> UC10
+usuario --> UC12
+usuario --> UC13
+usuario --> UC14
+
+prefeitura --> UC7
+
+UC1 --> UC11 : gera
+UC4 --> UC7 : dispara
+UC11 --> UC8 : atualiza
+UC8 --> UC9 : influencia
+UC12 --> UC11 : consome
+
+UC1 .> UC2 : inclui
+UC4 .> UC6 : inclui
+UC9 .> UC10 : inclui
+UC13 .> UC11 : inclui
+
+note right of usuario
+ <b>EVOA</b>
+ Ecologia - Vigilância
+ Organização - Ação
+end note
+
+@enduml

@@ -1,0 +1,17 @@
+@startuml entidade_relacionamento
+
+hide circle
+skinparam linetype ortho
+
+entity "USUARIO" as usuario {
+  * id_usuario : Integer <<PK>>
+  --
+  * nome : VARCHAR(100)
+  * email : VARCHAR(100) <<UNIQUE>>
+  * senha : VARCHAR(255)
+  * nivel : INTEGER
+  * xp_total : INTEGER
+  * cash_disponivel : DECIMAL(10,2)
+  * data_cadastro : DATETIME
+  * ultimo_login : DATETIME
+}

@@ -1,0 +1,16 @@
+@startuml casos_uso
+
+left to right direction
+
+actor "Usuário EVOA" as usuario
+
+package "Módulo Organização" as organizacao {
+  usecase "O1: Visualizar Progressão\nde Nível" as UC8
+  usecase "O2: Consultar Ranking\nComunitário" as UC9
+  usecase "O3: Gerenciar Perfil do\nUsuário" as UC10
+}
+
+usuario --> UC10: Pode
+
+UC10 .> UC9: inclui
+UC9 .> UC8: inclui
