@@ -29,10 +29,16 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True, nullable=True)
     password = db.Column(db.String(20), nullable=False)
-    cash = db.Column(db.Float, default=0.0)         # Pontos
-    xp = db.Column(db.Integer, default=0)           # Experiência
-    level = db.Column(db.Integer, default=1)        # Nível
-    trash_logs = db.relationship("TrashLog", backref="user", lazy=True)
+    cash = db.Column(db.Float, default=0.0)
+    xp = db.Column(db.Integer, default=0)
+    level = db.Column(db.Integer, default=1)
+
+    trash_logs = db.relationship(
+        "TrashLog",
+        backref="user",
+        lazy=True,
+        cascade="all, delete"
+    )
 
     def add_xp(self, amount):
         self.xp += amount
@@ -42,7 +48,6 @@ class User(db.Model, UserMixin):
         self.cash += amount
 
     def update_level(self):
-        # Exemplo simples: 100 XP por nível
         self.level = (self.xp // 100) + 1
 
 class Material(db.Model):
@@ -50,12 +55,16 @@ class Material(db.Model):
     name = db.Column(db.String(100), unique=True, nullable=False)
     default_weight = db.Column(db.Float, nullable=False)     # Peso padrão (ex: 1kg)
 
-    trash_logs = db.relationship("TrashLog", backref="material_ref", lazy=True)
+    trash_logs = db.relationship(
+        "TrashLog",
+        backref="material_ref",
+        lazy=True,
+        cascade="all, delete"
+    )
 
 class TrashLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     material_id = db.Column(db.Integer, db.ForeignKey("material.id"), nullable=False)
-    status = db.Column(db.String(20), default="Pendente")
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     weight = db.Column(db.Float, default=1.0)
     date = db.Column(db.Date, default=date.today)
@@ -101,7 +110,7 @@ def material_register():
         db.session.add(new_material)
         db.session.commit()
         flash("Material cadastrado com sucesso!", "success")
-        return redirect(url_for("material_register"))
+        return redirect(url_for("trash_logs"))
 
     return render_template("material_register.html")
 
@@ -227,23 +236,6 @@ def users():
     users = User.query.all()
     return render_template("users.html", users=users)
 
-#-----------------------------------------
-# Atualizar Status da Reciclagem --- UPDATE
-#-----------------------------------------
-
-@app.route("/update_log/<int:id>")
-@login_required
-def update_log(id):
-    trash_log = TrashLog.query.get_or_404(id)
-
-    if trash_log.user_id != current_user.id:
-        flash("Acesso não autorizado - Esta não é a conta logada!", "danger")
-        return redirect(url_for("trash_logs"))
-    
-    trash_log.status = "Concluída" if trash_log.status == "Pendente" else "Pendente"
-    db.session.commit()
-    return redirect(url_for("trash_logs"))
-
 #-----------------------------------
 # Atualizar Material --- UPDATE
 #-----------------------------------
@@ -254,8 +246,6 @@ def edit_material(id):
     material = Material.query.get_or_404(id)
     if request.method == "POST":
         material.name = request.form.get("name")
-        material.xp_per_unit = int(request.form.get("xp_per_unit"))
-        material.cash_per_unit = float(request.form.get("cash_per_unit"))
         material.default_weight = float(request.form.get("default_weight"))
         db.session.commit()
         flash("Material atualizado com sucesso!", "success")
@@ -317,14 +307,23 @@ def delete_material(id):
 # Deletar Usuário --- DELETE
 #-----------------------------------
 
-@app.route("/delete_user/<int:id>")
+@app.route("/delete_user/<int:id>", methods=["POST"])
 @login_required
 def delete_user(id):
     user = User.query.get_or_404(id)
     db.session.delete(user)
     db.session.commit()
-    flash("Usuário excluído com sucesso!", "info")
+    flash("Usuário deletado com sucesso!", "info")
     return redirect(url_for("users"))
+
+#-----------------------------------
+# Perfil do Usuário --- READ
+#-----------------------------------
+
+@app.route("/profile")
+@login_required
+def profile():
+    return render_template("profile.html", user=current_user)
 
 #-----------------------------------
 # CRIAR BANCO NA PRIMEIRA EXECUÇÃO

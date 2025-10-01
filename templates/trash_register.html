@@ -5,12 +5,11 @@
     <form method="POST">
 
         <label for="material">Tipo de Material Reciclado</label>
-        <input list="materials" name="material" id="material" placeholder="Selecione o material" required>
-        <datalist id="materials">
+        <select name="material" id="material" required>
             {% for material in materials %}
-                <option value="{{ material.name }}">
+                <option value="{{ material.name }}">{{ material.name }}
             {% endfor %}
-        </datalist>
+        </select>
         <br>
 
         <label for="weight">Peso (kg)</label>

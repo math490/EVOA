@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %} Perfil do Usuário {% endblock %}
+{% block content %}
+<h2>Perfil do Usuário</h2>
+<ul>
+    <li><strong>Nome:</strong> {{ user.name }}</li>
+    <li><strong>E-mail:</strong> {{ user.email }}</li>
+    <li><strong>Nível:</strong> {{ user.level }}</li>
+    <li><strong>XP:</strong> {{ user.xp }}</li>
+    <li><strong>Cash:</strong> {{ "%.2f"|format(user.cash) }}</li>
+</ul>
+<a href="{{ url_for('edit_user', id=user.id) }}">Editar Perfil</a>
+{% endblock %}

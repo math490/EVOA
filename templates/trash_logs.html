@@ -3,15 +3,26 @@
 {% block content %}
     <h2>Minhas Reciclagens</h2>
     <a href="{{ url_for("trash_register") }}">Adicionar Nova Reciclagem</a><br>
-    <ul>
-        {% for trash_log in trash_logs %}
-            <li>
-                <b>{{ trash_log.material_ref.name }}</b> -
-                {{ trash_log.weight }} kg -
-                {{ trash_log.date.strftime('%d/%m/%Y') }} -
-                Cash: R$ {{ '%.2f' % trash_log.cash_earned }} -
-                XP: {{ trash_log.xp_earned }}
-            </li>
-        {% endfor %}
-    </ul>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Material</th>
+                <th>Peso (kg)</th>
+                <th>Data</th>
+                <th>Cash</th>
+                <th>XP</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trash_log in trash_logs %}
+            <tr>
+                <td>{{ trash_log.material_ref.name }}</td>
+                <td>{{ trash_log.weight }}</td>
+                <td>{{ trash_log.date.strftime('%d/%m/%Y') }}</td>
+                <td>{{ '%.2f' % trash_log.cash_earned }}</td>
+                <td>{{ trash_log.xp_earned }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
