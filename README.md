@@ -17,6 +17,17 @@ Os usuários podem registrar materiais reciclados, acumular **Cash** e **XP**, a
 
 ---
 
+## Autores
+- Matheus Teles de Andrade
+- João Pedro Oliveira Campos
+- Felipe Marcondes Corcini
+- Camilly Luana Lauer
+- Djalma Alves Galli Cavalheiro
+- Lucas Gomes Machado
+- Gabriel Ruan Nepumoceno
+
+---
+
 ## Estrutura do Projeto
 O EVOA é construído em **Flutter**, permitindo execução em Android e iOS.  
 Alguns módulos já implementados:  
