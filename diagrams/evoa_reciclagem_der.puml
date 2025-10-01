@@ -1,17 +1,101 @@
-@startuml classes
+@startuml entidade_relacionamento
 
-!theme amiga
+hide circle
+skinparam linetype ortho
 
-entity A {
-    + id : number
-    + nome : string
+entity "USUARIO" as usuario {
+  * id_usuario : Integer <<PK>>
+  --
+  * nome : VARCHAR(100)
+  * email : VARCHAR(100) <<UNIQUE>>
+  * senha : VARCHAR(255)
+  * nivel : INTEGER
+  * xp_total : INTEGER
+  * cash_disponivel : DECIMAL(10,2)
+  * data_cadastro : DATETIME
+  * ultimo_login : DATETIME
 }
 
-entity B {
-    + id : number
-    + nome : string
+entity "RECICLAGEM" as reciclagem {
+  * id_reciclagem : Integer <<PK>>
+  --
+  # id_usuario : Integer <<FK>>
+  * material : ENUM('PLASTICO','PAPEL','VIDRO','METAL','ELETRONICOS','ORGANICO','OUTROS')
+  * quantidade : DECIMAL(8,2)
+  * data_registro : DATETIME
+  * xp_gerado : INTEGER
+  * cash_gerado : DECIMAL(8,2)
+  * localizacao : VARCHAR(200)
 }
 
-A --{B
+entity "DENUNCIA" as denuncia {
+  * id_denuncia : Integer <<PK>>
+  --
+  # id_usuario : Integer <<FK>>
+  * tipo : ENUM('LIXO_ACUMULADO','DESCARTE_IRREGULAR','POLUICAO_AGUA','QUEIMADA_IRREGULAR','PODA_DRSTIVA','OUTROS')
+  * descricao : TEXT
+  * localizacao : VARCHAR(200)
+  * urgencia : ENUM('BAIXA','MEDIA','ALTA')
+  * status : ENUM('PENDENTE','EM_ANALISE','RESOLVIDA','CANCELADA')
+  * data_denuncia : DATETIME
+  * protocolo : VARCHAR(50) <<UNIQUE>>
+}
+
+entity "EVIDENCIA" as evidencia {
+  * id_evidencia : Integer <<PK>>
+  --
+  # id_denuncia : Integer <<FK>>
+  * url_imagem : VARCHAR(500)
+  * descricao : VARCHAR(200)
+  * data_upload : DATETIME
+}
+
+entity "RECOMPENSA" as recompensa {
+  * id_recompensa : Integer <<PK>>
+  --
+  * nome : VARCHAR(100)
+  * descricao : TEXT
+  * custo_cash : DECIMAL(8,2)
+  * tipo : ENUM('DESCONTO','BRINDE','SERVICO','RECONHECIMENTO')
+  * disponivel : BOOLEAN
+  * estoque : INTEGER
+}
+
+entity "RESGATE" as resgate {
+  * id_resgate : Integer <<PK>>
+  --
+  # id_usuario : Integer <<FK>>
+  # id_recompensa : Integer <<FK>>
+  * data_resgate : DATETIME
+  * status : ENUM('PENDENTE','PROCESSADO','ENTREGUE','CANCELADO')
+  * codigo_utilizacao : VARCHAR(100)
+}
+
+entity "NIVEL" as nivel {
+  * nivel : Integer <<PK>>
+  --
+  * xp_necessario : INTEGER
+  * titulo : VARCHAR(50)
+  * beneficios : TEXT
+}
+
+entity "RANKING" as ranking {
+  * id_ranking : Integer <<PK>>
+  --
+  # id_usuario : Integer <<FK>>
+  * periodo : ENUM('DIARIO','SEMANAL','MENSAL','ANUAL')
+  * posicao : INTEGER
+  * xp_periodo : INTEGER
+  * data_atualizacao : DATETIME
+}
+
+usuario ||--o{ reciclagem : "realiza"
+usuario ||--o{ denuncia : "faz"
+usuario }o--o{ recompensa : "resgata" via resgate
+usuario ||--|| nivel : "pertence"
+usuario ||--o{ ranking : "participa"
+
+denuncia ||--o{ evidencia : "possui"
+reciclagem }|--|| nivel : "contribui para"
 
 @enduml
