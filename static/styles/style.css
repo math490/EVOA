@@ -50,39 +50,52 @@ h1, h2 {
     background: #2e7d32;
 }
 
-/* Responsividade para telas menores */
-@media (max-width: 600px) {
+.navbar-text {
+    margin-bottom: 0;
+}
+
+.navbar .navbar-text {
+    color: darkgreen;
+}
+
+.navbar .dropdown {
+    margin-left: auto;
+}
+
+@media (max-width: 991px) {
+    .navbar .navbar-text {
+        font-size: 1.2rem;
+    }
+
     nav {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px 5px;
         background: url("../images/app_bar_icon.png") no-repeat center center;
         background-size: cover;
     }
 
-    header {
-        background: #94b331;
+    .btn-outline-light {
+        border: 2px solid #fff !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    .btn-outline-light:active,
+    .btn-outline-light:focus:active {
+        background: rgba(0,0,0,0.3) !important;
+        color: #fff !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .btn-outline-light,
+    .btn-outline-light:focus,
+    .btn-outline-light:active {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
     }
 
-    nav a {
-        margin: 5px 0;
-        font-size: 1.1rem;
-    }
-
-    main {
-        padding: 10px;
-    }
-
-    h1, h2 {
-        font-size: 1.3rem;
-    }
-
-    .btn {
-        width: 100%;
-        box-sizing: border-box;
-        text-align: center;
-        font-size: 1.1rem;
-        padding: 12px 0;
-        margin: 8px 0;
+    .btn-outline-light:active,
+    .btn-outline-light:focus:active {
+    background: rgba(0,0,0,0.3) !important;
+    color: #fff !important;
     }
 }
