@@ -110,7 +110,7 @@ def material_register():
         db.session.add(new_material)
         db.session.commit()
         flash("Material cadastrado com sucesso!", "success")
-        return redirect(url_for("trash_logs"))
+        return redirect(url_for("index"))
 
     return render_template("material_register.html")
 
@@ -150,7 +150,7 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password, password):
             login_user(user)
-            return redirect(url_for("trash_logs"))
+            return redirect(url_for("index"))
         
         else:
             flash("E-mail ou senha incorretos", "danger")
@@ -225,6 +225,15 @@ def trash_logs():
 def materials():
     materials = Material.query.all()
     return render_template("materials.html", materials=materials)
+
+#-----------------------------------
+# Perfil do Usuário --- READ
+#-----------------------------------
+
+@app.route("/profile")
+@login_required
+def profile():
+    return render_template("profile.html", user=current_user)
 
 #-----------------------------------
 # Listar Usuários --- READ
@@ -315,15 +324,6 @@ def delete_user(id):
     db.session.commit()
     flash("Usuário deletado com sucesso!", "info")
     return redirect(url_for("users"))
-
-#-----------------------------------
-# Perfil do Usuário --- READ
-#-----------------------------------
-
-@app.route("/profile")
-@login_required
-def profile():
-    return render_template("profile.html", user=current_user)
 
 #-----------------------------------
 # CRIAR BANCO NA PRIMEIRA EXECUÇÃO

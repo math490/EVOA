@@ -12,7 +12,9 @@
         <!-- Navbar para telas grandes -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-success d-none d-lg-flex align-items-center justify-content-between px-4">
             <div class="navbar-brand d-flex align-items-center">
-                <span class="fs-2 me-2">🌿</span>
+                <span class="fs-2 me-2">
+                    <img src="../static/images/EVOA logo.svg" alt="Logo">
+                </span>
             </div>
             <div class="text-center flex-grow-1">
                 <span class="navbar-text fs-3 fw-bold">EVOA</span>
@@ -24,8 +26,10 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     {% if current_user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{{ url_for('index') }}">Início</a></li>
                         <li><a class="dropdown-item" href="{{ url_for('trash_logs') }}">Minhas Reciclagens</a></li>
                         <li><a class="dropdown-item" href="{{ url_for('profile') }}">Minha Conta</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('material_register') }}">Registrar Material</a></li>
                         <li><a class="dropdown-item" href="{{ url_for('logout') }}">Sair</a></li>
                     {% else %}
                         <li><a class="dropdown-item" href="{{ url_for('login') }}">Login</a></li>
@@ -40,8 +44,10 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="mx-auto text-center">
-                <span class="fs-2">🌿</span>
-                <div class="navbar-text fs-5 fw-bold">EVOA</div>
+                <div class="logo-tit">
+                    <img src="../static/images/EVOA logo.svg" alt="Logo">
+                    <div class="navbar-text fs-5 fw-bold">EVOA</div>
+                </div>
             </div>
         </nav>
         <!-- Sidebar para telas pequenas -->

@@ -34,6 +34,20 @@ h1, h2 {
     color: #2e7d32;
 }
 
+img {
+    height: 50px;
+    width: 50px;
+    background-color: #ffffff25;
+    border-radius: 100%;
+}
+
+.logo-tit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .btn {
     display: inline-block;
     margin: 8px;
@@ -77,6 +91,7 @@ h1, h2 {
         background: transparent !important;
         box-shadow: none !important;
     }
+    
     .btn-outline-light:active,
     .btn-outline-light:focus:active {
         background: rgba(0,0,0,0.3) !important;
