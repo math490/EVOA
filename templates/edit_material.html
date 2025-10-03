@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-4">
     <h2 class="mb-4">Editar Material Reciclável</h2>
-    <form method="POST" class="row g-3">
+    <form method="POST" id="registerForm" class="row g-3">
         <div class="col-md-6">
             <label for="name" class="form-label">Nome do Material</label>
             <input type="text" name="name" id="name" class="form-control" value="{{ material.name }}" required>
@@ -13,7 +13,7 @@
             <input type="number" name="default_weight" id="default_weight" class="form-control" value="{{ material.default_weight }}" step="0.001" min="0.001" required>
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-success">Salvar Alterações</button>
+            <button type="submit" class="btn btn-outline-success" id="submitBtn" disabled>Salvar Alterações</button>
         </div>
     </form>
 </div>
