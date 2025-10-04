@@ -13,8 +13,10 @@
         <section class="actions">
             <h2>Minhas Ações</h2>
             <p>Olá, <strong>{{ current_user.name }}</strong>!</p>
-            <a href="{{ url_for('trash_register') }}" class="btn btn-outline-success btn-sm">Registrar Reciclagem</a>
             <a href="{{ url_for('trash_logs') }}" class="btn btn-outline-success btn-sm">Ver Meus Registros</a>
+            <a href="{{ url_for('profile') }}" class="btn btn-outline-success btn-sm">Minha Conta</a>
+            <a href="{{ url_for('materials') }}" class="btn btn-outline-success btn-sm">Materiais Recicláveis</a>
+            <a href="{{ url_for('users') }}" class="btn btn-outline-success btn-sm">Usuários</a>
         </section>
     {% else %}
         <section class="cta">
