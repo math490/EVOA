@@ -2,18 +2,18 @@
 
 **Ecologia - Vigilância - Organização - Ação**  
 
-O **EVOA** é um aplicativo que busca incentivar a **reciclagem** e a **consciência ambiental** através de um sistema de recompensas e gamificação.  
-Os usuários podem registrar materiais reciclados, acumular **Cash** e **XP**, acompanhar seu histórico e evoluir de nível dentro da plataforma.  
+Alinhado ao Objetivo de Desenvolvimento Sustentável número 12 da ONU, que se refere ao consumo e produção responsáveis. O **EVOA** é um aplicativo que busca incentivar a **reciclagem** e a **consciência ambiental** através de um sistema de recompensas e gamificação.
+Os usuários podem registrar materiais reciclados, acumular **Cash** e **XP**, acompanhar seu histórico e evoluir de nível dentro da plataforma.
 
 ---
 
 ## Funcionalidades Principais
-- **Registro de Reciclagem**: registre materiais reciclados (plástico, papel, vidro, metal, eletrônicos e outros).  
+- **Registro de Reciclagem**: registre materiais reciclados (plástico, papel, vidro, metal, eletrônicos e outros).
 - **Sistema de Cash**: cada reciclagem gera Cash acumulado no perfil do usuário.  
 - **Progressão por Nível**: acumule XP ao reciclar e suba de nível.  
-- **Ranking**: compare sua evolução com outros usuários.  
-- **Loja**: utilize o Cash acumulado para recompensas futuras.  
-- **Histórico Diário**: acompanhe quanto reciclou e quanto obteve em Cash e XP em cada dia.  
+- **Ranking**: compare sua evolução com outros usuários.
+- **Loja**: utilize o Cash acumulado para recompensas futuras.
+- **Histórico Diário**: acompanhe quanto reciclou e quanto obteve em Cash e XP em cada dia.
 
 ---
 
@@ -52,6 +52,9 @@ Alguns módulos já implementados:
   [![Assista ao vídeo](docs/images/video_thumb.png)](docs/videos/demo.mp4)  
 
 ---
+
+## Documentos
+- https://drive.google.com/drive/folders/1xgoAVzVvhmDfbeCC2Tol_XpRYIur1hLu?usp=sharing
 
 ## 🔧 Instalação e Execução
 1. Clone este repositório:  
