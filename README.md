@@ -3,7 +3,7 @@
 **Ecologia - Vigilância - Organização - Ação**  
 
 Alinhado ao Objetivo de Desenvolvimento Sustentável número 12 da ONU, que se refere ao consumo e produção responsáveis. O **EVOA** é um aplicativo que busca incentivar a **reciclagem** e a **consciência ambiental** através de um sistema de recompensas e gamificação.
-Os usuários podem registrar materiais reciclados, acumular **Cash** e **XP**, acompanhar seu histórico e evoluir de nível dentro da plataforma.
+Os usuários podem registrar materiais reciclados, acumular **Cash** e **XP**, acompanhar seu histórico e evoluir de nível dentro da plataforma, além de contar uma funcionalidade de denúncias de problemas infraestruturais urbanos.
 
 ---
 
@@ -14,6 +14,7 @@ Os usuários podem registrar materiais reciclados, acumular **Cash** e **XP**, a
 - **Ranking**: compare sua evolução com outros usuários.
 - **Loja**: utilize o Cash acumulado para recompensas futuras.
 - **Histórico Diário**: acompanhe quanto reciclou e quanto obteve em Cash e XP em cada dia.
+- **Denúncias**: denuncie falhas, danos e dentre outros problemas na infraestrutura da cidade.
 
 ---
 
