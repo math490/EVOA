@@ -31,11 +31,7 @@ Os usuários podem registrar materiais reciclados, acumular **Cash** e **XP**, a
 ## Estrutura do Projeto
 O EVOA é construído em **Flask**, permitindo, a princípio, a execução na Web.  
 Alguns módulos já implementados:  
-- **HomePage** → visão geral do perfil, Cash e XP.  
-- **PerfilPage** → histórico do usuário com subdivisão por dias.  
-- **Registro de Materiais** → popup para cadastrar quantidade reciclada.  
-- **Ranking** → acompanhamento da comunidade.  
-- **Loja** → espaço para futuras recompensas.  
+- **/profile** → visão geral do perfil, Cash e XP.
 
 ---
 
