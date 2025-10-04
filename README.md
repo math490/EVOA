@@ -29,7 +29,7 @@ Os usuários podem registrar materiais reciclados, acumular **Cash** e **XP**, a
 ---
 
 ## Estrutura do Projeto
-O EVOA é construído em **Flutter**, permitindo execução em Android e iOS.  
+O EVOA é construído em **Flask**, permitindo execução em Android e iOS.  
 Alguns módulos já implementados:  
 - **HomePage** → visão geral do perfil, Cash e XP.  
 - **PerfilPage** → histórico do usuário com subdivisão por dias.  
