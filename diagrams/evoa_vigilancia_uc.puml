@@ -1,0 +1,27 @@
+@startuml casos_uso
+
+left to right direction
+
+actor "Usuário EVOA" as usuario
+actor "Sistema Prefeitura" as prefeitura <<external>>
+
+package "Módulo Vigilância" as vigilancia {
+  usecase "V1: Fazer Denúncia de\nIrregularidade" as UC4
+  usecase "V2: Acompanhar Status das\nDenúncias" as UC5
+  usecase "V3: Registrar Evidência\nFotográfica" as UC6
+  usecase "V4: Notificar Órgãos\nCompetentes" as UC7
+}
+
+usuario --> UC4
+usuario --> UC5
+prefeitura --> UC7
+UC4 --> UC7 : dispara
+UC4 .> UC6 : inclui
+
+note right of usuario
+ <b>EVOA</b>
+ Ecologia - Vigilância
+ Organização - Ação
+end note
+
+@enduml

@@ -1,0 +1,18 @@
+@startuml atividades
+
+start
+
+:Usuario acessa o sistema;
+:Usuario escolhe opção "Ver descontos";
+:Sistema lista descontos disponíveis;
+
+if (Usuario seleciona desconto?) then (Sim)
+    :Aplicar desconto no cashback;
+    :Confirmar desconto aplicado;
+else (Não)
+    :Encerrar processo;
+endif
+
+stop
+
+@enduml
