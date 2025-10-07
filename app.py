@@ -53,6 +53,30 @@ def index():
     return render_template("index.html")
 
 #-----------------------------------
+# ROTAS DE DENÚNCIA (ADICIONADAS AQUI)
+#-----------------------------------
+
+@app.route("/denuncia", methods=["GET", "POST"])
+def denuncia():
+    if request.method == "POST":
+        # Aqui você processaria os dados da denúncia
+        flash("Denúncia recebida! Agora localize no mapa.", "success")
+        return redirect(url_for('mapa'))
+    return render_template("denuncia.html")
+
+@app.route("/mapa", methods=["GET", "POST"])
+def mapa():
+    if request.method == "POST":
+        # Aqui você processaria a localização
+        flash("Localização confirmada!", "success")
+        return redirect(url_for('agradecimento_denuncia'))
+    return render_template("mapa.html")
+
+@app.route("/agradecimento_denuncia")
+def agradecimento_denuncia():
+    return render_template("agradecimento_denuncia.html")
+
+#-----------------------------------
 # Cadastro de Usuário --- CREATE
 #-----------------------------------
 

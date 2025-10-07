@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %} Localizar no Mapa - EVOA {% endblock %}
+{% block content %}
+    <h2>Localizar no Mapa</h2>
+    
+    <form method="POST">
+        <label for="localizacao">Digite a localização:</label>
+        <input type="text" name="localizacao" id="localizacao" placeholder="Ex: Rua, número, bairro..."><br>
+
+        <div id="mapa" style="height: 400px; width: 100%; background: #f0f0f0; margin: 20px 0; border: 1px solid #ccc;">
+            <p style="text-align: center; padding: 180px;">Mapa interativo - Clique para marcar a localização</p>
+        </div>
+
+        <p>Localização selecionada: <span id="localizacao-selecionada">Nenhuma localização selecionada</span></p>
+
+        <button type="submit" class="btn">Confirmar Localização</button>
+    </form>
+
+    <script>
+        document.getElementById('mapa').addEventListener('click', function() {
+            document.getElementById('localizacao-selecionada').textContent = 'Localização marcada no mapa';
+        });
+    </script>
+{% endblock %}

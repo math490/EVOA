@@ -15,12 +15,14 @@
             <p>Olá, <strong>{{ current_user.name }}</strong>!</p>
             <a href="{{ url_for('trash_register') }}" class="btn">Registrar Material</a>
             <a href="{{ url_for('trash_logs') }}" class="btn">Ver Meus Registros</a>
+            <a href="{{ url_for('denuncia') }}" class="btn" style="background: #d32f2f;">Denunciar Acúmulos de Lixo</a>
         </section>
     {% else %}
         <section class="cta">
             <h2>Comece Agora</h2>
             <a href="{{ url_for('login') }}" class="btn">Login</a>
             <a href="{{ url_for('register') }}" class="btn">Registrar</a>
+            <a href="{{ url_for('denuncia') }}" class="btn" style="background: #d32f2f;">Denunciar Acúmulos de Lixo</a>
         </section>
     {% endif %}
 {% endblock %}

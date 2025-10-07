@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %} Denúncia Recebida - EVOA {% endblock %}
+{% block content %}
+    <h2>Denúncia Recebida!</h2>
+    
+    <section class="welcome">
+        <p>Obrigado por contribuir com o meio ambiente! 🌍</p>
+        <p>Sua denúncia foi registrada e será analisada pela equipe responsável.</p>
+    </section>
+
+    <section class="actions">
+        <a href="{{ url_for('index') }}" class="btn">Voltar ao Menu Principal</a>
+        <a href="{{ url_for('denuncia') }}" class="btn">Realizar Outra Denúncia</a>
+    </section>
+{% endblock %}

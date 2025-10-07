@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %} Denunciar Acúmulo de Lixo - EVOA {% endblock %}
+{% block content %}
+    <h2>Denunciar Acúmulo de Lixo</h2>
+    <form method="POST">
+
+        <h3>Tipo de Denúncia</h3>
+        <table>
+            <tr>
+                <th>Selecionar</th>
+                <th>Tipo de Lixo</th>
+                <th>Descrição</th>
+            </tr>
+            <tr>
+                <td><input type="radio" name="tipo_lixo" value="acumulo_domestico" required></td>
+                <td>Acúmulo de Lixo Doméstico</td>
+                <td>Resíduos domésticos acumulados em vias públicas</td>
+            </tr>
+            <tr>
+                <td><input type="radio" name="tipo_lixo" value="lixo_radioativo"></td>
+                <td>Lixo Radioativo</td>
+                <td>Materiais com radiação perigosa</td>
+            </tr>
+            <tr>
+                <td><input type="radio" name="tipo_lixo" value="lixo_perigoso"></td>
+                <td>Lixo Perigoso</td>
+                <td>Resíduos químicos ou tóxicos</td>
+            </tr>
+            <tr>
+                <td><input type="radio" name="tipo_lixo" value="entulho_construcao"></td>
+                <td>Entulho de Construção</td>
+                <td>Resíduos de obras civis</td>
+            </tr>
+            <tr>
+                <td><input type="radio" name="tipo_lixo" value="outros"></td>
+                <td>Outros</td>
+                <td>Outros tipos de acúmulo</td>
+            </tr>
+        </table>
+
+        <label for="descricao">Descrição (opcional):</label>
+        <textarea name="descricao" id="descricao" rows="4" placeholder="Descreva o problema..."></textarea><br>
+
+        <label for="foto">Tirar Foto:</label>
+        <input type="file" name="foto" id="foto" accept="image/*" capture="camera">
+        <p style="color: #666; font-size: 0.9rem;">A denúncia com foto será levada mais a sério</p><br>
+
+        <button type="button" onclick="window.location.href='{{ url_for('mapa') }}'" class="btn">Nos mostre onde é</button>
+
+    </form>
+{% endblock %}
