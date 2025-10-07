@@ -37,7 +37,7 @@ Alguns módulos já implementados:
 ---
 
 ## Pré-visualizações
-> *(Adicione aqui prints da aplicação ou gravações de tela quando disponíveis)*  
+> *(Prints da aplicação ou gravações de tela quando disponíveis)*  
 
 - **Exemplo de perfil do usuário**  
   ![Imagem Perfil](docs/images/perfil.png)  
