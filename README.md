@@ -57,4 +57,14 @@ Alguns módulos já implementados:
 1. Clone este repositório:  
    ```bash
    git clone https://github.com/math490/EVOA.git
-   cd evoa
+
+2. No terminal do vscode crie um ambiente virtual e o ative:  
+   ```bash
+   python -m venv env
+   env/Scripts/activate
+
+3. Instale as dependências do flask:  
+   ```bash
+   pip install flask
+   pip install flask flask-sqlalchemy
+   pip install flask-login
