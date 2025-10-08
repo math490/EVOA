@@ -85,7 +85,11 @@ def load_user(user_id):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    ano = get_ano_atual()
+    return render_template("index.html", ano=ano)
+
+def get_ano_atual():
+    return date.today().year
 
 #-----------------------------------
 # Cadastro de Material --- CREATE
@@ -112,7 +116,8 @@ def material_register():
         flash("Material cadastrado com sucesso!", "success")
         return redirect(url_for("index"))
 
-    return render_template("material_register.html")
+    ano = get_ano_atual()
+    return render_template("material_register.html", ano=ano)
 
 #-----------------------------------
 # Cadastro de Usuário --- CREATE
@@ -139,7 +144,8 @@ def register():
         flash("Cadastro realizado com sucesso! (Faça Login)", "success")
         return redirect(url_for("login"))
 
-    return render_template("register.html")
+    ano = get_ano_atual()
+    return render_template("register.html", ano=ano)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -155,7 +161,8 @@ def login():
         else:
             flash("E-mail ou senha incorretos", "danger")
 
-    return render_template("login.html")
+    ano = get_ano_atual()
+    return render_template("login.html", ano=ano)
 
 @app.route("/logout")
 @login_required
@@ -204,7 +211,8 @@ def trash_register():
 
     materials = Material.query.all()
     default_weight = materials[0].default_weight if materials else 0.001
-    return render_template("trash_register.html", materials=materials, default_weight=default_weight)
+    ano = get_ano_atual()
+    return render_template("trash_register.html", materials=materials, default_weight=default_weight, ano=ano)
 
 #-----------------------------------
 # Listar Reciclagem --- READ
@@ -214,7 +222,8 @@ def trash_register():
 @login_required
 def trash_logs():
     logs = TrashLog.query.filter_by(user_id=current_user.id).order_by(TrashLog.date.desc()).all()
-    return render_template("trash_logs.html", trash_logs=logs)
+    ano = get_ano_atual()
+    return render_template("trash_logs.html", trash_logs=logs, ano=ano)
 
 #-----------------------------------
 # Listar Materiais --- READ
@@ -224,7 +233,8 @@ def trash_logs():
 @login_required
 def materials():
     materials = Material.query.all()
-    return render_template("materials.html", materials=materials)
+    ano = get_ano_atual()
+    return render_template("materials.html", materials=materials, ano=ano)
 
 #-----------------------------------
 # Perfil do Usuário --- READ
@@ -233,7 +243,8 @@ def materials():
 @app.route("/profile")
 @login_required
 def profile():
-    return render_template("profile.html", user=current_user)
+    ano = get_ano_atual()
+    return render_template("profile.html", user=current_user, ano=ano)
 
 #-----------------------------------
 # Listar Usuários --- READ
@@ -243,7 +254,8 @@ def profile():
 @login_required
 def users():
     users = User.query.all()
-    return render_template("users.html", users=users)
+    ano = get_ano_atual()
+    return render_template("users.html", users=users, ano=ano)
 
 #-----------------------------------
 # Atualizar Material --- UPDATE
@@ -259,7 +271,8 @@ def edit_material(id):
         db.session.commit()
         flash("Material atualizado com sucesso!", "success")
         return redirect(url_for("materials"))
-    return render_template("edit_material.html", material=material)
+    ano = get_ano_atual()
+    return render_template("edit_material.html", material=material, ano=ano)
 
 #-----------------------------------
 # Atualizar Usuário --- UPDATE
@@ -279,7 +292,8 @@ def edit_user(id):
         db.session.commit()
         flash("Usuário atualizado com sucesso!", "success")
         return redirect(url_for("users"))
-    return render_template("edit_user.html", user=user)
+    ano = get_ano_atual()
+    return render_template("edit_user.html", user=user, ano=ano)
 
 #-----------------------------------
 # Deletar Reciclagem --- DELETE

@@ -11,10 +11,7 @@ nav {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-}
-
-header {
-    background: #2e7d32;
+    height: 10rem;
 }
 
 nav a {
@@ -26,22 +23,42 @@ nav a {
 
 main {
     padding: 20px;
-    max-width: 900px;
+    max-width: 1000px;
+    min-height: 337px;
     margin: auto;
+}
+
+.foot {
+    margin-top: 8%;
+}
+
+.foot a {
+    text-decoration: none;
 }
 
 h1, h2 {
     color: #2e7d32;
 }
 
+.welcome {
+    text-align: justify;
+}
+
 .logo {
-    height: 50px;
-    width: 50px;
+    height: 5rem;
+    width: 5rem;
     background-color: #ffffff25;
     border-radius: 100%;
 }
 
 .logo-tit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cta {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -69,7 +86,7 @@ h1, h2 {
 }
 
 .navbar .navbar-text {
-    color: darkgreen;
+    color: rgb(0, 255, 0);
 }
 
 .navbar .dropdown {
@@ -84,6 +101,14 @@ h1, h2 {
     nav {
         background: url("../images/app_bar_icon.png") no-repeat center center;
         background-size: cover;
+        height: 9rem;
+    }
+
+    .offcanvas .nav-item {
+        border-radius: 5px;
+    }
+    .offcanvas .nav-item .nav-link {
+        margin-left: 10px;
     }
 
     .btn-outline-light {
@@ -97,20 +122,53 @@ h1, h2 {
         background: rgba(0,0,0,0.3) !important;
         color: #fff !important;
     }
+
+    .offcanvas .nav-item:hover, 
+    .offcanvas .nav-item:focus {
+        background-color: #14532d !important; /* tom mais escuro do verde */
+        color: #fff !important;
+    }
 }
 
 @media (min-width: 992px) {
+    nav {
+        background: url("../images/PageHeader.svg") no-repeat bottom center;
+        background-size: cover;
+    }
+
+    .navbar .navbar-text {
+        background-color: rgba(0, 0, 0, 0.438);
+    }
+
+    .dropdown-item {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* Dropdown item hover: escurece o fundo */
+    .dropdown-menu .dropdown-item:hover, 
+    .dropdown-menu .dropdown-item:focus {
+        background-color: #14532d !important; /* tom mais escuro do verde */
+        color: #fff !important;
+    }
+
+    /* Garante que o fundo não ultrapasse o dropdown */
+    .dropdown-menu {
+        overflow: hidden;
+        border-radius: 0.5rem;
+
+    }
+
     .btn-outline-light,
     .btn-outline-light:focus,
     .btn-outline-light:active {
-    border: none !important;
-    box-shadow: none !important;
-    background: transparent !important;
+        box-shadow: none !important;
+        background: transparent !important;
     }
 
     .btn-outline-light:active,
     .btn-outline-light:focus:active {
-    background: rgba(0,0,0,0.3) !important;
-    color: #fff !important;
+        background: rgba(0, 0, 0, 0.3) !important;
+        color: #fff !important;
     }
 }
