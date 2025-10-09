@@ -82,11 +82,11 @@
                 {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                 {% for category, message in messages %}
-                <div class="toast align-items-center text-white 
+                <div class="toast align-items-center text-white
                             {% if category == 'error' or category == 'danger' %}bg-danger
                             {% elif category == 'warning' %}bg-warning text-dark
                             {% elif category == 'info' %}bg-info text-dark
-                            {% else %}bg-success{% endif %}
+                            {% else %}bg-success-custom{% endif %}
                             border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="6000">
                     <div class="d-flex">
                         <div class="toast-body">

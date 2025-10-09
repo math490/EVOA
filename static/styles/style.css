@@ -1,3 +1,11 @@
+.bg-success-custom {
+    background-color: #45cc65 !important; /* Substitua #0ae23c pela cor desejada */
+}
+
+.toast {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.596) !important;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
