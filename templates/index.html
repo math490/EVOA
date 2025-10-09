@@ -2,27 +2,33 @@
 {% block title %} Início - EVOA {% endblock %}
 {% block content %}
     <section class="welcome">
-        <h1>Bem-vindo ao <span style="color: green;">EVOA</span> 🌱</h1>
+        <h1 class="mb-3" style="text-align: center;">Seja muito bem-vindo ao <span style="color: green;">EVOA</span>{% if current_user.is_authenticated %}<strong>, {{ current_user.name }}</strong>!<br>{% else %}{% endif %}</h1>
         <p>
-            Este é o sistema de gerenciamento de reciclagem e tarefas ambientais.<br>
-            Faça login ou registre-se para começar a registrar suas atividades.
+            Alinhado ao Objetivo de Desenvolvimento Sustentável número 12 da ONU, que se refere ao consumo e produção responsáveis. O EVOA é um aplicativo que busca incentivar a reciclagem e a consciência ambiental através de um sistema de recompensas e gamificação. Os usuários podem registrar materiais reciclados, acumular Cash e XP, acompanhar seu histórico e evoluir de nível dentro da plataforma, além de contar uma funcionalidade de denúncias de problemas infraestruturais urbanos.<br>
         </p>
     </section>
 
     {% if current_user.is_authenticated %}
-        <section class="actions">
+        <section class="cta">
             <h2>Minhas Ações</h2>
-            <p>Olá, <strong>{{ current_user.name }}</strong>!</p>
-            <a href="{{ url_for('trash_logs') }}" class="btn btn-outline-success btn-sm">Ver Meus Registros</a>
-            <a href="{{ url_for('profile') }}" class="btn btn-outline-success btn-sm">Minha Conta</a>
-            <a href="{{ url_for('materials') }}" class="btn btn-outline-success btn-sm">Materiais Recicláveis</a>
-            <a href="{{ url_for('users') }}" class="btn btn-outline-success btn-sm">Usuários</a>
+            <div class="ini-buttons">
+
+                <a href="{{ url_for('trash_logs') }}" class="btn btn-outline-success btn-sm">Ver Meus Registros</a>
+                <a href="{{ url_for('profile') }}" class="btn btn-outline-success btn-sm">Minha Conta</a>
+                <a href="{{ url_for('materials') }}" class="btn btn-outline-success btn-sm">Materiais Recicláveis</a>
+                <a href="{{ url_for('users') }}" class="btn btn-outline-success btn-sm">Usuários</a>
+
+            </div>
         </section>
     {% else %}
         <section class="cta">
-            <h2>Comece Agora</h2>
-            <a href="{{ url_for('login') }}" class="btn btn-outline-success btn-sm">Login</a>
-            <a href="{{ url_for('register') }}" class="btn btn-outline-primary btn-sm">Registrar</a>
+            <h2 class="mb-3">Comece Agora</h2>
+            <div class="ini-buttons">
+
+                <a href="{{ url_for('login') }}" class="btn btn-outline-success btn-sm">Login</a>
+                <a href="{{ url_for('register') }}" class="btn btn-outline-primary btn-sm">Registrar</a>
+
+            </div>
         </section>
     {% endif %}
 {% endblock %}
