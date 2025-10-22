@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %} Editar Reciclagem {% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Editar Registro</h2>
+    <form method="POST" id="registerForm" class="row g-3">
+        <div class="col-md-6">
+            <label for="material_id" class="form-label">Id do Material</label>
+            <input type="number" name="material_id" id="material_id" class="form-control" value="{{ trash_log.material_id }}" required>
+        </div>
+        <div class="col-md-6">
+            <label for="user_id" class="form-label">Id do Usuário</label>
+            <input type="number" name="user_id" id="user_id" class="form-control" value="{{ trash_log.user_id }}" required>
+        </div>
+        <div class="col-md-6">
+            <label for="weight" class="form-label">Peso da Reciclagem</label>
+            <input type="number" name="weight" id="weight" class="form-control" value="{{ trash_log.weight }}" step="0.001" min="0.001" required>
+        </div>
+        <div class="col-md-6">
+            <label for="date" class="form-label">Data da Reciclagem</label>
+            <input type="date" name="date" id="date" class="form-control" value="{{ trash_log.date.strftime('%Y-%m-%d') if trash_log.date else '' }}" required>
+        </div>
+        <div class="col-md-6">
+            <label for="cash_earned" class="form-label">Cash Ganho</label>
+            <input type="number" name="cash_earned" id="cash_earned" class="form-control" value="{{ trash_log.cash_earned }}" step="0.001" min="0.001"  required>
+        </div>
+        <div class="col-md-6">
+            <label for="xp_earned" class="form-label">Xp Ganho</label>
+            <input type="number" name="xp_earned" id="xp_earned" class="form-control" value="{{ trash_log.xp_earned }}" required>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-outline-success" id="submitBtn" disabled>Salvar Alterações</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

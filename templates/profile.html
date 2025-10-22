@@ -1,13 +1,61 @@
 {% extends "base.html" %}
 {% block title %} Perfil do Usuário {% endblock %}
 {% block content %}
-<h2>Perfil do Usuário</h2>
-<ul>
-    <li><strong>Nome:</strong> {{ user.name }}</li>
-    <li><strong>E-mail:</strong> {{ user.email }}</li>
-    <li><strong>Nível:</strong> {{ user.level }}</li>
-    <li><strong>XP:</strong> {{ user.xp }}</li>
-    <li><strong>Cash:</strong> {{ "%.2f"|format(user.cash) }}</li>
-</ul>
-<a href="{{ url_for('edit_user', id=user.id) }}">Editar Perfil</a>
+    <style>
+        main {
+            max-width: none !important;
+            padding: 0 !important;
+        }
+  </style>
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-6 mb-4 mb-lg-0">
+        <div class="card mb-0" style="border-radius: .5rem;">
+          <div class="row g-0">
+            <div class="col-md-4 gradient-custom text-center text-white"
+              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-person-bounding-box img-fluid my-5" alt="Avatar" viewBox="0 0 16 16">
+                    <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5"/>
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                </svg>
+              <h5>{{ user.name }}</h5>
+              <a href="{{ url_for('edit_user', id=user.id) }} "class="btn btn-outline-primary btn-sm">Editar Perfil <i class="bi bi-pencil-square mb-5"></i></a>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body p-4 text-bg-dark">
+                <h6>Informações</h6>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Email</h6>
+                    <p class="text-light">{{ user.email }}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Cash</h6>
+                    <p class="text-light">{{ "%.2f"|format(user.cash) }}</p>
+                  </div>
+                </div>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Nível</h6>
+                    <p class="text-light">{{ user.level }}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>XP</h6>
+                    <p class="text-light">{{ user.xp }}</p>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-start">
+                  <a href="#!"><i class="bi bi-facebook fa-lg me-3"></i></a>
+                  <a href="#!"><i class="bi bi-twitter fa-lg me-3"></i></a>
+                  <a href="#!"><i class="bi bi-instagram fa-lg"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -1,3 +1,15 @@
+.bg-success-custom {
+    background-color: #08b430 !important; /* Substitua #0ae23c pela cor desejada */
+}
+
+.toast {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.596) !important;
+}
+
+.link_logo {
+    margin: 0;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -63,6 +75,14 @@ h1, h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.ini-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .btn {
@@ -171,4 +191,16 @@ h1, h2 {
         background: rgba(0, 0, 0, 0.3) !important;
         color: #fff !important;
     }
+}
+
+.gradient-custom {
+    background: #65f685;
+    background: -webkit-linear-gradient(to right bottom, rgb(62, 207, 57), rgb(207, 253, 133));
+    background: linear-gradient(to right bottom, rgb(83, 199, 73), rgb(164, 226, 93))
+}
+
+.row.pt-1 .col-6.mb-3 p {
+    border-radius: 8px;
+    background-color: rgb(42, 42, 44);
+    text-align: center;
 }
