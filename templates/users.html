@@ -16,11 +16,11 @@
     <tbody>
         {% for user in users %}
         <tr>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.level }}</td>
-            <td>{{ user.xp }}</td>
-            <td>{{ "%.2f"|format(user.cash) }}</td>
+            <td style="max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ user.name }}</td>
+            <td style="max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ user.email }}</td>
+            <td style="max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ user.level }}</td>
+            <td style="max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ user.xp }}</td>
+            <td style="max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ "%.2f"|format(user.cash) }}</td>
             <td>
                 <a href="{{ url_for('edit_user', id=user.id) }}" class="btn btn-outline-primary btn-sm">Editar</a>
                 <button onclick="confirmDelete('{{ user.id }}', '{{ user.name }}')" class="btn btn-outline-danger btn-sm">Deletar</button>

@@ -16,11 +16,11 @@
         <tbody>
             {% for trash_log in trash_logs %}
             <tr>
-                <td>{{ trash_log.material_ref.name }}</td>
-                <td>{{ trash_log.weight }}</td>
-                <td>{{ trash_log.date.strftime('%d/%m/%Y') }}</td>
-                <td>{{ '%.2f' % trash_log.cash_earned }}</td>
-                <td>{{ trash_log.xp_earned }}</td>
+                <td style="max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ trash_log.material_ref.name }}</td>
+                <td style="max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ trash_log.weight }}</td>
+                <td style="max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ trash_log.date.strftime('%d/%m/%Y') }}</td>
+                <td style="max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ '%.2f' % trash_log.cash_earned }}</td>
+                <td style="max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ trash_log.xp_earned }}</td>
                 <td>
                     <a href="{{ url_for('edit_log', id=trash_log.id) }} " class="btn btn-outline-primary btn-sm">Editar</a>
                     <form action="{{ url_for('delete_log', id=trash_log.id) }}" method="post" style="display:inline;" onsubmit="return confirm('Você tem certeza de que quer deletar este material?');">
