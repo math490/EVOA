@@ -32,6 +32,7 @@ class User(db.Model, UserMixin):
     cash = db.Column(db.Float, default=0.0)
     xp = db.Column(db.Integer, default=0)
     level = db.Column(db.Integer, default=1)
+    reports = db.relationship("Report", backref="user", lazy=True)
 
     trash_logs = db.relationship(
         "TrashLog",
@@ -70,6 +71,23 @@ class TrashLog(db.Model):
     date = db.Column(db.Date, default=date.today)
     cash_earned = db.Column(db.Float, default=0.0)
     xp_earned = db.Column(db.Integer, default=0)
+
+class Report(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    location_id = db.Column(db.Integer, db.ForeignKey("report_location.id"), nullable=False)
+    type = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    photo_url = db.Column(db.String(200), nullable=True)
+    location = db.relationship("ReportLocation", backref="reports")
+
+class ReportLocation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    report_id = db.Column(db.Integer, db.ForeignKey("report.id"), nullable=False)
+    local_description = db.Column(db.Text, nullable=True)
+    lat = db.Column(db.Float, nullable=False)
+    lon = db.Column(db.Float, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now)
 
 #-----------------------------------
 # LOGIN MANAGER
@@ -430,6 +448,102 @@ def delete_log(id):
     db.session.commit()
     flash("Registro de Reciclagem deletado com sucesso!", "success")
     return redirect(url_for("trash_logs"))
+
+#-----------------------------------
+# CRUD para Report
+#-----------------------------------
+
+@app.route('/reports')
+@login_required
+def reports():
+    reports = Report.query.order_by(Report.id.desc()).all()
+    return render_template('reports.html', reports=reports)
+
+@app.route('/report', methods=['GET', 'POST'])
+@login_required
+def report():
+    if request.method == 'POST':
+        type = request.form.get('type')
+        description = request.form.get('description')
+        photo_url = request.form.get('photo_url')
+        lat = request.form.get('lat')
+        lon = request.form.get('lon')
+        local_description = request.form.get('local_description')
+        # Cria localização
+        location = ReportLocation(lat=float(lat), lon=float(lon))
+        db.session.add(location)
+        db.session.commit()
+        # Cria denúncia
+        report = Report(user_id=current_user.id, location_id=location.id, type=type, description=description, photo_url=photo_url, local_description=local_description)
+        db.session.add(report)
+        db.session.commit()
+        flash('Denúncia criada com sucesso!', 'success')
+        return redirect(url_for('report_thanks'))
+    return render_template('report.html')
+
+@app.route('/edit_report/<int:id>', methods=['GET', 'POST'])
+@login_required
+def report_edit(id):
+    report = Report.query.get_or_404(id)
+    if request.method == 'POST':
+        report.type = request.form.get('type')
+        report.description = request.form.get('description')
+        report.photo_url = request.form.get('photo_url')
+        lat = request.form.get('lat')
+        lon = request.form.get('lon')
+        local_description = request.form.get('local_description')
+        # Atualiza localização
+        if report.location:
+            report.location.lat = float(lat)
+            report.location.lon = float(lon)
+        report.local_description = local_description
+        db.session.commit()
+        flash('Denúncia atualizada!', 'success')
+        return redirect(url_for('reports'))
+    return render_template('report_edit.html', report=report)
+
+@app.route('/delete_report/<int:id>', methods=['POST'])
+@login_required
+def report_delete(id):
+    report = Report.query.get_or_404(id)
+    if report.location:
+        db.session.delete(report.location)
+    db.session.delete(report)
+    db.session.commit()
+    flash('Denúncia deletada!', 'success')
+    return redirect(url_for('reports'))
+
+#-----------------------------------
+# CRUD para ReportLocation
+#-----------------------------------
+
+@app.route('/locations')
+@login_required
+def locations():
+    locations = ReportLocation.query.order_by(ReportLocation.id.desc()).all()
+    return render_template('locations.html', locations=locations)
+
+@app.route('/edit_location/<int:id>', methods=['GET', 'POST'])
+@login_required
+def location_edit(id):
+    location = ReportLocation.query.get_or_404(id)
+    if request.method == 'POST':
+        location.lat = float(request.form.get('lat'))
+        location.lon = float(request.form.get('lon'))
+        location.local_description = request.form.get('local_description')
+        db.session.commit()
+        flash('Localização atualizada!', 'success')
+        return redirect(url_for('locations'))
+    return render_template('location_edit.html', location=location)
+
+@app.route('/delete_location/<int:id>', methods=['POST'])
+@login_required
+def location_delete(id):
+    location = ReportLocation.query.get_or_404(id)
+    db.session.delete(location)
+    db.session.commit()
+    flash('Localização deletada!', 'success')
+    return redirect(url_for('locations'))
 
 #-----------------------------------
 # CRIAR BANCO NA PRIMEIRA EXECUÇÃO

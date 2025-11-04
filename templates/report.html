@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %} Denunciar Acúmulo de Lixo - EVOA {% endblock %}
+{% block content %}
+    <h2 class="mb-4">Denunciar Acúmulo de Lixo</h2>
+    <form method="POST" enctype="multipart/form-data" class="mb-4">
+        <h3 class="mb-3">Tipo de Denúncia</h3>
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Selecionar</th>
+                    <th>Tipo de Lixo</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="radio" name="tipo_lixo" value="acumulo_domestico" required class="form-check-input"></td>
+                    <td>Acúmulo de Lixo Doméstico</td>
+                    <td>Resíduos domésticos acumulados em vias públicas</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="tipo_lixo" value="lixo_radioativo" class="form-check-input"></td>
+                    <td>Lixo Radioativo</td>
+                    <td>Materiais com radiação perigosa</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="tipo_lixo" value="lixo_perigoso" class="form-check-input"></td>
+                    <td>Lixo Perigoso</td>
+                    <td>Resíduos químicos ou tóxicos</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="tipo_lixo" value="entulho_construcao" class="form-check-input"></td>
+                    <td>Entulho de Construção</td>
+                    <td>Resíduos de obras civis</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="tipo_lixo" value="outros" class="form-check-input"></td>
+                    <td>Outros</td>
+                    <td>Outros tipos de acúmulo</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição (opcional):</label>
+            <textarea name="descricao" id="descricao" rows="4" class="form-control" placeholder="Descreva o problema..."></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="foto" class="form-label">Tirar Foto:</label>
+            <input type="file" name="foto" id="foto" accept="image/*" capture="camera" class="form-control">
+            <small class="text-muted">A denúncia com foto será levada mais a sério</small>
+        </div>
+
+        <a class="btn btn-primary">Nos mostre onde é</a>
+    </form>
+{% endblock %}
