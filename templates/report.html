@@ -14,27 +14,27 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="radio" name="tipo_lixo" value="acumulo_domestico" required class="form-check-input"></td>
+                    <td><input type="radio" name="type" value="acumulo_domestico" required class="form-check-input"></td>
                     <td>Acúmulo de Lixo Doméstico</td>
                     <td>Resíduos domésticos acumulados em vias públicas</td>
                 </tr>
                 <tr>
-                    <td><input type="radio" name="tipo_lixo" value="lixo_radioativo" class="form-check-input"></td>
+                    <td><input type="radio" name="type" value="lixo_radioativo" class="form-check-input"></td>
                     <td>Lixo Radioativo</td>
                     <td>Materiais com radiação perigosa</td>
                 </tr>
                 <tr>
-                    <td><input type="radio" name="tipo_lixo" value="lixo_perigoso" class="form-check-input"></td>
+                    <td><input type="radio" name="type" value="lixo_perigoso" class="form-check-input"></td>
                     <td>Lixo Perigoso</td>
                     <td>Resíduos químicos ou tóxicos</td>
                 </tr>
                 <tr>
-                    <td><input type="radio" name="tipo_lixo" value="entulho_construcao" class="form-check-input"></td>
+                    <td><input type="radio" name="type" value="entulho_construcao" class="form-check-input"></td>
                     <td>Entulho de Construção</td>
                     <td>Resíduos de obras civis</td>
                 </tr>
                 <tr>
-                    <td><input type="radio" name="tipo_lixo" value="outros" class="form-check-input"></td>
+                    <td><input type="radio" name="type" value="outros" class="form-check-input"></td>
                     <td>Outros</td>
                     <td>Outros tipos de acúmulo</td>
                 </tr>
@@ -42,16 +42,60 @@
         </table>
 
         <div class="mb-3">
-            <label for="descricao" class="form-label">Descrição (opcional):</label>
-            <textarea name="descricao" id="descricao" rows="4" class="form-control" placeholder="Descreva o problema..."></textarea>
+            <label for="description" class="form-label">Descrição (opcional):</label>
+            <textarea name="description" id="description" rows="4" class="form-control" placeholder="Descreva o problema..."></textarea>
         </div>
 
         <div class="mb-3">
-            <label for="foto" class="form-label">Tirar Foto:</label>
-            <input type="file" name="foto" id="foto" accept="image/*" capture="camera" class="form-control">
+            <label for="photo_url" class="form-label">Tirar Foto:</label>
+            <input type="file" name="photo_url" id="photo_url" accept="image/*" capture="camera" class="form-control">
             <small class="text-muted">A denúncia com foto será levada mais a sério</small>
         </div>
 
-        <a class="btn btn-primary">Nos mostre onde é</a>
+        <div class="mb-3">
+            <label class="form-label">Localização do problema:</label>
+            <input type="text" name="local_description" id="local_description" class="form-control mb-2" placeholder="Ex: Rua, número, bairro...">
+            <div id="mapa" class="mb-2 border rounded" style="height: 400px; width: 100%;"></div>
+            <input type="hidden" name="lat" id="lat">
+            <input type="hidden" name="lon" id="lon">
+            <p>Localização selecionada: <span id="localizacao-selecionada" class="fw-bold">Nenhuma localização selecionada</span></p>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar Denúncia</button>
     </form>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+    <script>
+        let map, marker;
+        function initMap(lat, lng) {
+            map = new google.maps.Map(document.getElementById('mapa'), {
+                center: {lat: lat, lng: lng},
+                zoom: 15
+            });
+            map.addListener('click', function(e) {
+                placeMarker(e.latLng);
+            });
+        }
+        function placeMarker(location) {
+            if (marker) marker.setMap(null);
+            marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+            document.getElementById('lat').value = location.lat();
+            document.getElementById('lon').value = location.lng();
+            document.getElementById('localizacao-selecionada').textContent = `Lat: ${location.lat().toFixed(5)}, Lng: ${location.lng().toFixed(5)}`;
+        }
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                initMap(pos.coords.latitude, pos.coords.longitude);
+            }, function() {
+                initMap(-23.55052, -46.633308); // fallback: São Paulo
+            });
+        } else {
+            initMap(-23.55052, -46.633308);
+        }
+    </script>
+    <footer class="text-center mt-5">
+        <small>&copy; {{ date }} EVOA</small>
+    </footer>
 {% endblock %}

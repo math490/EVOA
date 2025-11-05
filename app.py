@@ -32,8 +32,12 @@ class User(db.Model, UserMixin):
     cash = db.Column(db.Float, default=0.0)
     xp = db.Column(db.Integer, default=0)
     level = db.Column(db.Integer, default=1)
-    reports = db.relationship("Report", backref="user", lazy=True)
-
+    reports = db.relationship(
+        "Report",
+        backref="user",
+        lazy=True,
+        cascade="all, delete"
+    )
     trash_logs = db.relationship(
         "TrashLog",
         backref="user",
@@ -75,11 +79,16 @@ class TrashLog(db.Model):
 class Report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    location_id = db.Column(db.Integer, db.ForeignKey("report_location.id"), nullable=False)
+    location_id = db.Column(db.Integer, db.ForeignKey("reportlocation.id"), nullable=False)
     type = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     photo_url = db.Column(db.String(200), nullable=True)
-    location = db.relationship("ReportLocation", backref="reports")
+    location = db.relationship(
+        "ReportLocation",
+        backref="report",
+        lazy=True,
+        cascade="all, delete"
+    )
 
 class ReportLocation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -463,23 +472,24 @@ def reports():
 @login_required
 def report():
     if request.method == 'POST':
-        type = request.form.get('type')
-        description = request.form.get('description')
-        photo_url = request.form.get('photo_url')
+        tipo = request.form.get('type')
+        descricao = request.form.get('description')
+        foto_url = request.form.get('photo_url')
         lat = request.form.get('lat')
-        lon = request.form.get('lon')
+        lng = request.form.get('lng')
         local_description = request.form.get('local_description')
         # Cria localização
-        location = ReportLocation(lat=float(lat), lon=float(lon))
+        location = ReportLocation(lat=float(lat), lon=float(lon), local_description=local_description)
         db.session.add(location)
         db.session.commit()
         # Cria denúncia
-        report = Report(user_id=current_user.id, location_id=location.id, type=type, description=description, photo_url=photo_url, local_description=local_description)
+        report = Report(user_id=current_user.id, location_id=location.id, type=tipo, description=descricao, photo_url=foto_url)
         db.session.add(report)
         db.session.commit()
         flash('Denúncia criada com sucesso!', 'success')
         return redirect(url_for('report_thanks'))
-    return render_template('report.html')
+    ano = get_ano_atual()
+    return render_template('report.html', date=ano)
 
 @app.route('/edit_report/<int:id>', methods=['GET', 'POST'])
 @login_required
